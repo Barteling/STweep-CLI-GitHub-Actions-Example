@@ -17,7 +17,7 @@ jobs:
           $params = '/i',"$HOME\Downloads\STweep.msi",'/quiet'
           $p = Start-Process 'msiexec.exe' -ArgumentList $params -NoNewWindow -Wait -PassThru
           echo $p.ExitCode                    
-          echo "${env:ProgramFiles(x86)}\GeBa Engineering\STweep CLI" >> $GITHUB_PATH
+          echo "${env:ProgramFiles(x86)}\GeBa Engineering\STweep CLI" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
           
       - name: Activate STweep CLI.    
         shell: powershell
