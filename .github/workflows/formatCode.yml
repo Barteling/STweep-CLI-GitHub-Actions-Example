@@ -16,7 +16,7 @@ jobs:
           Invoke-WebRequest -Uri "https://www.stweep.com/wp-content/uploads/STweep.CLI/STweep.CLI%201.0.0-Beta/STweep.CLI.Installer.msi" -Outfile "$HOME\Downloads\STweep.msi"                    
           $params = '/i',"$HOME\Downloads\STweep.msi",'/quiet'
           $p = Start-Process 'msiexec.exe' -ArgumentList $params -NoNewWindow -Wait -PassThru
-          echo $p.ExitCode
-          STweep.CLI license-activate -k 123 -a
+          echo $p.ExitCode          
+          PROGRAMFILES(X86)\GeBa Engineering\STweep CLI\STweep.CLI license-activate -k 123 -a
 
 
