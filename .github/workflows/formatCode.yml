@@ -21,6 +21,7 @@ jobs:
           
       - name: Activate STweep CLI.    
         shell: powershell
-        run: &STweep.CLI license-activate -k 123 -a
+        run: | 
+          &STweep.CLI license-activate -k 123 -a
 
 
