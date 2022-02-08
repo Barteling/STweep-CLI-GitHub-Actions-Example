@@ -20,6 +20,7 @@ jobs:
           echo "${env:ProgramFiles(x86)}\GeBa Engineering\STweep CLI" >> $GITHUB_PATH
           
       - name: Activate STweep CLI.    
-        run: STweep.CLI license-activate -k 123 -a
+        shell: powershell
+        run: &STweep.CLI license-activate -k 123 -a
 
 
