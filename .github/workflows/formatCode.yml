@@ -17,6 +17,6 @@ jobs:
           $params = '/i',"$HOME\Downloads\STweep.msi",'/quiet'
           $p = Start-Process 'msiexec.exe' -ArgumentList $params -NoNewWindow -Wait -PassThru
           echo $p.ExitCode          
-          PROGRAMFILES(X86)\GeBa Engineering\STweep CLI\STweep.CLI license-activate -k 123 -a
+          %PROGRAMFILES(X86)%\GeBa Engineering\STweep CLI\STweep.CLI license-activate -k 123 -a
 
 
