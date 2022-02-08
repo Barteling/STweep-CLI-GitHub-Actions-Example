@@ -19,6 +19,6 @@ jobs:
           $p = Start-Process 'msiexec.exe' -ArgumentList $params -NoNewWindow -Wait -PassThru
           echo $p.ExitCode          
           echo "${env:ProgramFiles(x86)}\GeBa Engineering\STweep CLI" >> $GITHUB_PATH
-          STweep.CLI license-activate -k 123 -a
+          &"${env:ProgramFiles(x86)}\GeBa Engineering\STweep CLI\STweep.CLI" license-activate -k 123 -a
 
 
