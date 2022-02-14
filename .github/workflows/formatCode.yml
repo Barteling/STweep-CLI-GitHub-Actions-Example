@@ -8,9 +8,6 @@ jobs:
 
   format:
     runs-on: windows-latest
-    env:
-      InstallationFolder: "\\GeBa Engineering\\STweep CLI"
-      SettingsFilePath: "\\GeBa Engineering\\STweep CLI\\Resources\\Default.STweep"
       
     steps:
       - uses: actions/checkout@v2
