@@ -9,7 +9,8 @@ jobs:
   format:
     runs-on: windows-latest
     env:
-      InstallationFolder: "${env:ProgramFiles(x86)}\\GeBa Engineering\\STweep CLI"
+      InstallationFolder: "\\GeBa Engineering\\STweep CLI"
+      SettingsFilePath: "\\GeBa Engineering\\STweep CLI\\Resources\\Default.STweep"
       
     steps:
       - uses: actions/checkout@v2
@@ -20,12 +21,16 @@ jobs:
           $params = '/i',"$HOME\Downloads\STweep.msi",'/quiet'
           $p = Start-Process 'msiexec.exe' -ArgumentList $params -NoNewWindow -Wait -PassThru
           echo $p.ExitCode                    
-          echo "$Env:InstallationFolder" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
+          echo "${env:ProgramFiles(x86)}${env:InstallationFolder}" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
           
       - name: Activate STweep CLI.    
-        shell: powershell
         run: &STweep.CLI license-activate -k ${{secrets.STWEEPCLILICENSEKEY}} -a
-          
-
-
-
+        
+      - name: Format code    
+        run: &STweep.CLI --path Get-Location  --settingsFile "${env:ProgramFiles(x86)}${env:SettingsFilePath}"
+        
+      - name: Deactivate license
+        if: always()
+        run: &STweep.CLI license-deactivate
+        
+        
