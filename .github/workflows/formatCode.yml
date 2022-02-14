@@ -8,20 +8,24 @@ jobs:
 
   format:
     runs-on: windows-latest
+    env:
+      InstallationFolder: "${env:ProgramFiles(x86)}\\GeBa Engineering\\STweep CLI"
+      
     steps:
       - uses: actions/checkout@v2
 
-      - name: Install and activate STweep CLI.    
+      - name: Install STweep CLI.    
         run: | 
           Invoke-WebRequest -Uri "https://www.stweep.com/wp-content/uploads/STweep.CLI/STweep.CLI%201.0.0-Beta/STweep.CLI.Installer.msi" -Outfile "$HOME\Downloads\STweep.msi"                    
           $params = '/i',"$HOME\Downloads\STweep.msi",'/quiet'
           $p = Start-Process 'msiexec.exe' -ArgumentList $params -NoNewWindow -Wait -PassThru
           echo $p.ExitCode                    
-          echo "${env:ProgramFiles(x86)}\GeBa Engineering\STweep CLI" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
+          echo "$Env:InstallationFolder" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
           
       - name: Activate STweep CLI.    
         shell: powershell
-        run: | 
-          &STweep.CLI license-activate -k 123 -a
+        run: &STweep.CLI license-activate -k ${{secrets.STWEEPCLILICENSEKEY}} -a
+          
+
 
 
