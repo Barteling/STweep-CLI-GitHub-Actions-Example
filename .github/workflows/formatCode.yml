@@ -24,13 +24,16 @@ jobs:
           echo "${env:ProgramFiles(x86)}${env:InstallationFolder}" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
           
       - name: Activate STweep CLI.    
-        run: &STweep.CLI license-activate -k ${{secrets.STWEEPCLILICENSEKEY}} -a
+        run: |
+          &STweep.CLI license-activate -k ${{secrets.STWEEPCLILICENSEKEY}} -a
         
       - name: Format code    
-        run: &STweep.CLI --path Get-Location  --settingsFile "${env:ProgramFiles(x86)}${env:SettingsFilePath}"
+        run: |
+          &STweep.CLI --path Get-Location  --settingsFile "${env:ProgramFiles(x86)}${env:SettingsFilePath}"
         
       - name: Deactivate license
         if: always()
-        run: &STweep.CLI license-deactivate
+        run: |
+          &STweep.CLI license-deactivate
         
         
