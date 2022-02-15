@@ -30,7 +30,7 @@ jobs:
       - name: Format code    
         run: |
           echo "${env:ProgramFiles(x86)}${env:SettingsFilePath}"
-          &STweep.CLI format --path " " --settingsFile "${env:ProgramFiles(x86)}${env:SettingsFilePath}"
+          &STweep.CLI format --path (Resolve-Path .\).Path --settingsFile "${env:ProgramFiles(x86)}${env:SettingsFilePath}"
         
       - name: Deactivate license
         if: always()
