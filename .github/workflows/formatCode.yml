@@ -29,7 +29,6 @@ jobs:
         
       - name: Format code    
         run: |
-          echo "${env:ProgramFiles(x86)}${env:SettingsFilePath}"
           &STweep.CLI format --path (Resolve-Path .\).Path --settingsFile "${env:ProgramFiles(x86)}${env:SettingsFilePath}"
         
       - name: Formatted code pull request
