@@ -36,8 +36,9 @@ jobs:
         uses: peter-evans/create-pull-request@v3
         with:
           commit-message : STweep.CLI formatted code.
-          title: STweep.CLI formatted code.
+          title: STweep.CLI formatted code
           body: Pull request with the formatted code by STweep CLI.        
+          branch: STweepCLIFormattedCode
       
       - name: Deactivate license
         if: always()
