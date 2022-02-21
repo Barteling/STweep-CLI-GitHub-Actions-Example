@@ -44,5 +44,3 @@ jobs:
         if: always()
         run: |
           &STweep.CLI license-deactivate
-        
-        
