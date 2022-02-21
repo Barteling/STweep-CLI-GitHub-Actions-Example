@@ -17,7 +17,7 @@ jobs:
 
       - name: Install STweep CLI.    
         run: | 
-          Invoke-WebRequest -Uri "https://www.stweep.com/wp-content/uploads/STweep.CLI/STweep.CLI%201.0.0-Beta/STweep.CLI.Installer.msi" -Outfile "$HOME\Downloads\STweep.msi"                    
+          Invoke-WebRequest -Uri "https://www.stweep.com/wp-content/uploads/STweep.CLI/LatestRelease/STweep.CLI.Installer.msi" -Outfile "$HOME\Downloads\STweep.msi"                    
           $params = '/i',"$HOME\Downloads\STweep.msi",'/quiet'
           $p = Start-Process 'msiexec.exe' -ArgumentList $params -NoNewWindow -Wait -PassThru
           echo $p.ExitCode                    
