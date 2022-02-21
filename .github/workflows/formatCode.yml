@@ -32,6 +32,9 @@ jobs:
           echo "${env:ProgramFiles(x86)}${env:SettingsFilePath}"
           &STweep.CLI format --path (Resolve-Path .\).Path --settingsFile "${env:ProgramFiles(x86)}${env:SettingsFilePath}"
         
+      - name: Create pull request.
+        uses: peter-evans/create-pull-request@v3
+      
       - name: Deactivate license
         if: always()
         run: |
