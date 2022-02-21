@@ -8,13 +8,39 @@ jobs:
 
   format:
     runs-on: windows-latest
+    env:
+      InstallationFolder: "\\GeBa Engineering\\STweep CLI"
+      SettingsFilePath: "\\GeBa Engineering\\STweep CLI\\Resources\\Default.STweep"
+      
     steps:
       - uses: actions/checkout@v2
 
-      - name: Install and activate STweep CLI.
+      - name: Install STweep CLI.    
         run: | 
-          Invoke-WebRequest -Uri "https://www.stweep.com/wp-content/uploads/STweep.CLI/STweep.CLI%201.0.0-Beta/STweep.CLI.Installer.msi" -Outfile "$HOME\Downloads\STweep.msi"
-          msiexec.exe /i "$HOME\Downloads\STweep.msi" /quiet
-          STweep.CLI license-activate -k ${{secrets.STWEEPCLILICENSEKEY}} -a
-
-
+          Invoke-WebRequest -Uri "https://www.stweep.com/wp-content/uploads/STweep.CLI/LatestRelease/STweep.CLI.Installer.msi" -Outfile "$HOME\Downloads\STweep.msi"                    
+          $params = '/i',"$HOME\Downloads\STweep.msi",'/quiet'
+          $p = Start-Process 'msiexec.exe' -ArgumentList $params -NoNewWindow -Wait -PassThru
+          echo $p.ExitCode                    
+          echo "${env:ProgramFiles(x86)}${env:InstallationFolder}" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
+          
+      - name: Activate STweep CLI.    
+        run: |
+          &STweep.CLI license-activate -k ${{secrets.STWEEPCLILICENSEKEY}} -a
+        
+      - name: Format code    
+        run: |
+          echo "${env:ProgramFiles(x86)}${env:SettingsFilePath}"
+          &STweep.CLI format --path (Resolve-Path .\).Path --settingsFile "${env:ProgramFiles(x86)}${env:SettingsFilePath}"
+        
+      - name: Formatted code pull request
+        uses: peter-evans/create-pull-request@v3
+        with:
+          commit-message : STweep.CLI formatted code.
+          title: STweep.CLI formatted code
+          body: Pull request with the formatted code by STweep CLI.        
+          branch: STweepCLIFormattedCode
+      
+      - name: Deactivate license
+        if: always()
+        run: |
+          &STweep.CLI license-deactivate
